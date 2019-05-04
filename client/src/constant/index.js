@@ -7,4 +7,5 @@ export const colors = {
   black: '#000',
   loginTheme: 'lightyellow',
   signupTheme: 'lightblue',
+  headerTheme: 'teal',
 }

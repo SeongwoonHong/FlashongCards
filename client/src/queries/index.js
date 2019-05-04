@@ -1,18 +1,5 @@
 import gql from 'graphql-tag';
 
-export const GET_TODO_BY_USER_QUERY = gql`
-  query TodoByUser($user_id: ID!) {
-    todoByUser(user_id: $user_id) {
-      todo_id
-      title
-      is_done
-      creation_date
-      update_date
-    }
-    visibilityFilter @client
-  }
-`;
-
 export const SIGNUP_MUTATION = gql`
   mutation Signup($username: String!, $password: String!) {
     signup(username: $username, password: $password) {
@@ -23,39 +10,41 @@ export const SIGNUP_MUTATION = gql`
   }
 `;
 
-export const ADD_TODO_MUTATION = gql`
-  mutation AddTodo($user_id: ID!, $title: String!) {
-    addTodo(user_id: $user_id, title: $title) {
-      todo_id
-      title
-      is_done
+export const ADD_CARD_MUTATION = gql`
+  mutation AddCard($user_id: ID!, $front: String!, $back: String) {
+    addCard(user_id: $user_id, front: $front, back: $back) {
+      card_id
+      front
+      back
       creation_date
-      update_date
+      modification_date
     }
   }
 `;
 
-export const GET_VISIBILITY_FILTER = gql`
-  {
-    visibilityFilter @client
+export const DELETE_CARD_MUTATION = gql`
+  mutation DeleteCard($card_id: ID!) {
+    deleteCard(card_id: $card_id) {
+      card_id
+      front
+      back
+      creation_date
+      modification_date
+    }
   }
 `;
 
-export const TOGGLE_DONE_TODO_MUTATION = gql`
-  mutation ToggleDoneTodo($todo_id: ID!, $is_done: Boolean!) {
-    toggleIsDoneTodo(todo_id: $todo_id, is_done: $is_done) {
-      todo_id
+export const GET_ALL_CARDS_QUERY = gql`
+  query Cards($user_id: ID!) {
+    cards(user_id: $user_id) {
+      card_id
       user_id
-      title
-      is_done
-    }
-  }
-`;
-
-export const REMOVE_TODO_MUTATION = gql`
-  mutation RemoveTodo($todo_id: ID!) {
-    removeTodo(todo_id: $todo_id) {
-      todo_id
+      front
+      back
+      creation_date
+      modification_date
+      is_studied
+      is_favorite
     }
   }
 `;
