@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const User = require('../../repository/user');
+const UserRepository = require('../../repository/user');
 const validationUtils = require('../../utils/validation-utils');
 const jwtUtils = require('../../utils/jwt-utils');
 const bcryptUtils = require('../../utils/bcrpyt-utils');
@@ -7,7 +7,7 @@ const bcryptUtils = require('../../utils/bcrpyt-utils');
 class UserResponse {  
   constructor(user) {
     this.user_id = user.user_id || null ;
-  this.username = user.username || null;
+    this.username = user.username || null;
     this.signup_date = user.signup_date || null;
     this.token = user.token || null;
   }
@@ -29,7 +29,7 @@ class UserController {
         throw new Error('Validation Error');
       }
 
-      const userRes = await User.login({ username, password });
+      const userRes = await UserRepository.login({ username, password });
 
       if (userRes.success) {
         return new UserResponse(userRes);
@@ -48,7 +48,7 @@ class UserController {
     // TODO: validation can be abstracted to a parent abstract class later..?
     // TODO: validation error handling as well
     try {
-      const userRes = await User.getById(user_id);
+      const userRes = await UserRepository.getById(user_id);
 
       if (userRes.success) {
         return new UserResponse(userRes);
@@ -63,7 +63,7 @@ class UserController {
 
   static async getUsers() {
     try {
-      const userRes = await User.getAllUsers();
+      const userRes = await UserRepository.getAllUsers();
 
       return userRes;
     } catch (e) {
@@ -76,14 +76,14 @@ class UserController {
       /**
        * checking user with username and password
        */
-      const user = await User.findByFields({
+      const user = await UserRepository.findByFields({
         fields: {
           username,
         }
       });
 
       if (!user.length) {
-        const userRes = await User.createUser({ username, password });
+        const userRes = await UserRepository.createUser({ username, password });
 
         return userRes;
       } else {

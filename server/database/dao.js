@@ -53,11 +53,11 @@ class DAO {
     })
   }
 
-  static async update(connection, { data, id }) {
+  static async update({ data, id }) {
     const result = await mysql.createQuery({
       query: `UPDATE ??
               SET ?
-              WHERE ?? = ?;`,
+              WHERE ?? = ? AND modification_date = CURRENT_TIMESTAMP;`,
       params: [this.TABLE_NAME, data, this.PRIMARY_KEY, id]
     });
 
@@ -74,7 +74,7 @@ class DAO {
     return result;
   }
 
-  static async delete({ id }) {
+  static async deleteById(id) {
     const data = await mysql.createQuery({
       query: `DELETE FROM ??
               WHERE ?? = ?;`,

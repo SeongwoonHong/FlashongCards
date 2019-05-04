@@ -2,35 +2,43 @@ const {
   GraphQLID,
   GraphQLString,
   GraphQLObjectType,
+  GraphQLInt,
   GraphQLNonNull,
+  GraphQLBoolean,
 } = require('graphql');
 
 module.exports = new GraphQLObjectType({
-  name: 'UserType',
+  name: 'CardType',
   fields: {
+    card_id: {
+      type: GraphQLID,
+    },
     user_id: {
       type: GraphQLID,
     },
-    username: {
+    front: {
       type: GraphQLString,
     },
-    password: {
+    back: {
       type: GraphQLString,
     },
-    email: {
-      type: GraphQLString,
+    category: {
+      type: GraphQLInt,
     },
     /**
      * Todo: signup date type should be date type not string
      */
-    signup_date: {
+    creation_date: {
       type: GraphQLString,
     },
     modification_date: {
       type: GraphQLString,
     },
-    token: {
-      type: GraphQLString,
+    is_studied: {
+      type: GraphQLBoolean,
+    },
+    is_favorite: {
+      type: GraphQLBoolean,
     }
   }
 });
