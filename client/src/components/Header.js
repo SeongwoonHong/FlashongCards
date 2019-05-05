@@ -34,7 +34,7 @@ const Header = () => {
         <span className="menu-item"></span>
         <span className="menu-item"></span>
       </div>
-      <StyledHeaderText>Flashong Cards</StyledHeaderText> 
+      <StyledHeaderText to="/main">Flashong Cards</StyledHeaderText> 
     </StyledHeader>
   );
 };
@@ -49,20 +49,19 @@ const StyledHeader = styled.div`
 
   .submenu-container {
     background-color: ${colors.primary};
-    opacity: 0.8;
     height: 0px;
     margin: 0px; 
-    padding: 0px; 
+    padding: 0px;
     position: absolute;
     top: 42px;
     left: 0px;
     width: 100%;
     z-index: -100;
-    transition: all 0.5s ease-out;
+    transition: all 0.25s ease-out;
 
     .submenu {
       border-bottom: 1px solid rgba(255,255,255,0.1);
-      display: block;
+      display: none;
       text-decoration: none;
 
       .submenu-text {
@@ -81,6 +80,10 @@ const StyledHeader = styled.div`
     &.open {
       height: 100px;
       z-index: 10000;
+
+      .submenu {
+        display: block;
+      }
     }
   }
 
@@ -125,8 +128,14 @@ const StyledHeader = styled.div`
   }
 `;
 
-const StyledHeaderText = styled.div`
+const StyledHeaderText = styled(({ children, className, ...rest}) => (
+  <Link className={className} {...rest}>
+    {children}
+  </Link>
+))`
   text-align: center;
+  text-decoration: none;
+  display: block;
   font-weight: bold;
   font-size: 18px;
   color: ${colors.white};

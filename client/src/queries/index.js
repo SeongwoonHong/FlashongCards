@@ -11,7 +11,7 @@ export const SIGNUP_MUTATION = gql`
 `;
 
 export const ADD_CARD_MUTATION = gql`
-  mutation AddCard($user_id: ID!, $front: String!, $back: String) {
+  mutation AddCard($user_id: ID!, $front: String!, $back: String!) {
     addCard(user_id: $user_id, front: $front, back: $back) {
       card_id
       front

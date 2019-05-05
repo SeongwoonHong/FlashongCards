@@ -8,4 +8,6 @@ export const colors = {
   loginTheme: 'lightyellow',
   signupTheme: 'lightblue',
   headerTheme: 'teal',
+  activeTab: '#a4a9b2',
+  inActiveTab: '#bdc2cc'
 }

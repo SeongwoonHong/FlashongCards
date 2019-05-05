@@ -146,6 +146,10 @@ const StyledLeft = styled.div`
   background-color: ${colors.signupTheme};
   height: 100%;
   position: relative;
+
+  @media (max-width: 550px) {
+    width: 100%;
+  }
 `;
 
 const StyledHeader = styled.div`
@@ -172,6 +176,10 @@ const StyledRight = styled.div`
 
   img {
     height: 100%;
+  }
+
+  @media (max-width: 550px) {
+    display: none;
   }
 `;
 

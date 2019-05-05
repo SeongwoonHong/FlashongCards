@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import App from './app';
+import Main from './main';
 import Signup from './signup';
 import Login from './login';
 import styled from 'styled-components';
@@ -12,7 +12,7 @@ const Routes = props => {
       <StyledContainer>
         <BrowserRouter>
           <Switch>
-            <Route exact path="/" component={App} />
+            <Route path="/main" component={Main} />
             <Route path="/signup" component={Signup} />
             <Route path="/login" component={Login} />
           </Switch>
