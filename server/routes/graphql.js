@@ -3,5 +3,5 @@ const schema = require('../schema/index');
 
 module.exports = expressGraphQL({
   schema,
-  graphiql: true
+  graphiql: true,
 });

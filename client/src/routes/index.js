@@ -8,7 +8,6 @@ import styled from 'styled-components';
 const Routes = props => {
   return (
     <StyledRoutes>
-      {/* <StyledImg src={torontoPicture} /> */}
       <StyledContainer>
         <BrowserRouter>
           <Switch>

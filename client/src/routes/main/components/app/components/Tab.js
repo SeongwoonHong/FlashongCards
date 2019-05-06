@@ -2,9 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { colors } from 'constant';
 
-const Tab = ({ count, text, isActive }) => {
+const Tab = ({ onClick, count, text, isActive }) => {
   return (
-    <StyledTab isActive={isActive}>
+    <StyledTab
+      isActive={isActive}
+      onClick={onClick}
+    >
       <StyledTabContent>
         {text} - {count}
       </StyledTabContent>

@@ -7,19 +7,20 @@ import AddIcon from '@material-ui/icons/Add';
 
 import FlipCardList from './FlipCardList';
 import CardList from './CardList';
-import { Button } from 'components';
+import { Button, Loader } from 'components';
 import Tab from './Tab';
 import styled from 'styled-components';
 
-const App = ({ cards, visibilityFilter = 'ACTIVE', loading, history }) => {
+const App = ({ cards, loading, history }) => {
   const [mode, setMode] = useState('list');
+  const [tabFilter, setTabFilter] = useState('All');
 
   function navigateToAddCard() {
     history.push('/main/add-card');
   }
   
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   function countTotalNumberOfField(field) {
@@ -34,21 +35,27 @@ const App = ({ cards, visibilityFilter = 'ACTIVE', loading, history }) => {
             <Tab
               text="All Cards"
               count={cards.length}
-              isActive
+              onClick={() => setTabFilter('All')}
+              isActive={tabFilter === 'All'}
             />
             <Tab
               text="Favorites"
               count={countTotalNumberOfField('is_favorite')}
+              onClick={() => setTabFilter('Favorites')}
+              isActive={tabFilter === 'Favorites'}
             />
             <Tab
               text="Studied"
               count={countTotalNumberOfField('is_studied')}
+              onClick={() => setTabFilter('Studied')}
+              isActive={tabFilter === 'Studied'}
             />
           </StyledTabContainer>
           <CardList cards={cards} />
         </Fragment>
       );
     }
+
     return (
       <FlipCardList cards={cards} />
     );

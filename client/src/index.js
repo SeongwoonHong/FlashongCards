@@ -22,12 +22,6 @@ const client = new ApolloClient({
   }
 });
 
-const initialData = {
-  visibilityFilter: 'ACTIVE',
-}
-
-cache.writeData({ data: initialData })
-
 const theme = createMuiTheme({
   typography: {
     fontFamily: [
