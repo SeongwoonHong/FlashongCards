@@ -1,7 +1,7 @@
 export const colors = {
   white: '#fff',
-  loginUsername: '#4daf7c',
-  loginPassword: '#404241',
+  usernameTheme: '#4daf7c',
+  passwordTheme: '#404241',
   loginButton: '#e9c85d',
   primary: '#3f51b5',
   black: '#000',

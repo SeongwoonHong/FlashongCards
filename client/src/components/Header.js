@@ -14,12 +14,14 @@ const Header = () => {
           <Link
             to="/login"
             className="submenu"
+            onClick={() => toggleIsMenuOpened(false)}
           >
             <div className="submenu-text">Login</div>
           </Link>
           <Link
             to="/signup"
             className="submenu"
+            onClick={() => toggleIsMenuOpened(false)}
           >
             <div className="submenu-text">Sign up</div>
           </Link>
@@ -43,8 +45,12 @@ const Header = () => {
 export default Header;
 
 const StyledHeader = styled.div`
-  padding: 10px 0;
-  position: relative;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  left: 0;
+  width: 100%;
+  height: 42px;
   background-color: ${colors.headerTheme};
 
   .submenu-container {
@@ -138,5 +144,6 @@ const StyledHeaderText = styled(({ children, className, ...rest}) => (
   display: block;
   font-weight: bold;
   font-size: 18px;
+  margin-top: 10px;
   color: ${colors.white};
 `;

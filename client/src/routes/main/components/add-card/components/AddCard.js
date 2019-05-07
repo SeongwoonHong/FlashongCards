@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import { ADD_CARD_MUTATION, GET_ALL_CARDS_QUERY } from 'queries';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
+import styled from 'styled-components';
 
 const AddCard = ({ addCard }) => {
   const [front, setFront] = useState('');
@@ -13,14 +13,16 @@ const AddCard = ({ addCard }) => {
   function onClickHandler(e) {
     e.preventDefault();
 
-    addCard(1, front, back);
-
-    setFront('');
-    setBack('');
+    if (front.trim() !== '' && back.trim() !== '') {
+      addCard(1, front, back);
+      
+      setFront('');
+      setBack('');
+    }
   }
 
   return (
-    <div>
+    <StyledAddCard>
       <TextField
         id="outlined-multiline-flexible"
         label="Front"
@@ -30,16 +32,19 @@ const AddCard = ({ addCard }) => {
         onChange={(e) => setFront(e.target.value)}
         margin="normal"
         variant="outlined"
+        className="front"
       />
       <TextField
         id="outlined-multiline-flexible"
         label="Back"
         multiline
-        rowsMax="10"
+        rows={10}
+        rowsMax="15"
         value={back}
         onChange={(e) => setBack(e.target.value)}
         margin="normal"
         variant="outlined"
+        className="back"
       />
       <Divider />
       <Button
@@ -49,9 +54,21 @@ const AddCard = ({ addCard }) => {
       >
         Add
       </Button>
-    </div>
+    </StyledAddCard>
   );
 };
+
+const StyledAddCard = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 10px;
+
+  .front,
+  .back {
+    width: 100%;
+  }
+`;
 
 const withAddCardMutation = graphql(ADD_CARD_MUTATION, {
   props: ({ mutate }) => ({

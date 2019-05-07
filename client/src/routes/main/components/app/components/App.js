@@ -2,14 +2,11 @@ import React, { Fragment, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose, graphql } from 'react-apollo';
 import { GET_ALL_CARDS_QUERY } from 'queries';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-
+import { Button, Loader, Footer } from 'components';
+import styled from 'styled-components';
 import FlipCardList from './FlipCardList';
 import CardList from './CardList';
-import { Button, Loader } from 'components';
 import Tab from './Tab';
-import styled from 'styled-components';
 
 const App = ({ cards, loading, history }) => {
   const [mode, setMode] = useState('list');
@@ -71,9 +68,9 @@ const App = ({ cards, loading, history }) => {
         </Button>
       </StyledButtonContainer>
       {renderBody()}
-      <Fab color="primary" onClick={navigateToAddCard}>
-        <AddIcon />
-      </Fab>
+      <Footer
+        navigateToAddCard={navigateToAddCard}
+      />
     </Fragment>
   );
 }
@@ -92,7 +89,7 @@ const withGetCardList = graphql(GET_ALL_CARDS_QUERY, {
 
 const StyledButtonContainer = styled.div`
   width: 50%;
-  margin: 20px auto 10px auto;
+  margin: 60px auto 10px auto;
 `;
 
 const StyledTabContainer = styled.div`
@@ -102,5 +99,5 @@ const StyledTabContainer = styled.div`
 
 export default compose(
   withRouter,
-  withGetCardList)
-(App);
+  withGetCardList
+)(App);

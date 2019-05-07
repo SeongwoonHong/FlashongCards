@@ -34,7 +34,6 @@ class Card extends DAO {
   static async getAllCards(user_id) {
     try {
       const result = await this.findByFields({ fields: { user_id } });
-      console.log('jjaa')
       return result;
     } catch (e) {
       throw new Error(e);

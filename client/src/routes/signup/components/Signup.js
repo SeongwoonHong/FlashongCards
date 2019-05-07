@@ -3,6 +3,7 @@ import { graphql } from 'react-apollo';
 import { SIGNUP_MUTATION } from 'queries';
 import styled from 'styled-components';
 import { colors } from 'constant';
+import { InputBox } from 'components';
 import { Link } from 'react-router-dom';
 import img from 'assets/signup.jpg';
 
@@ -37,30 +38,42 @@ const Signup = (props) => {
               <Fragment>
                 <StyledHeader>Don't have an <strong>account?</strong></StyledHeader>
                 <StyledSubHeader>Please sign up to enjoy it!</StyledSubHeader>
-                <StyledUsername>
+                <InputBox
+                  backgroundColor={colors.usernameTheme}
+                  borderTopLeftRadius="5px"
+                  borderTopRightRadius="5px"
+                  inputBorderColor={colors.usernameTheme}
+                >
                   <input
                     value={name}
                     type="text"
                     placeholder="Enter Name"
                     onChange={(e) => setName(e.target.value)}
                   />
-                </StyledUsername>
-                <StyledPassword>
+                </InputBox>
+                <InputBox
+                  backgroundColor={colors.passwordTheme}
+                  inputBorderColor={colors.passwordTheme}
+                >
                   <input
                     value={password}
                     type="password"
                     placeholder="Enter Password"
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                </StyledPassword>
-                <StyledPassword className="password-confirm">
+                </InputBox>
+                <InputBox 
+                  className="password-confirm"
+                  backgroundColor={colors.passwordTheme}
+                  inputBorderColor={colors.passwordTheme}
+                >
                   <input
                     value={passwordConfirm}
                     type="password"
                     placeholder="Password Confirm"
                     onChange={(e) => setPasswordConfirm(e.target.value)}
                   />
-                </StyledPassword>
+                </InputBox>
                 <StyledSignupBtn>
                   <div>Sign up</div>
                 </StyledSignupBtn>
@@ -138,6 +151,11 @@ const StyledSignup = styled.form`
       color: ${colors.white};
       opacity: 0.8;
     }
+
+  }
+
+  .password-confirm {
+    opacity: 0.6;
   }
 `
 const StyledLeft = styled.div`
@@ -191,54 +209,6 @@ const StyledDiv = styled.div`
   width: 100%;
 `;
 
-const StyledUsername = styled.div`
-  background-color: ${colors.loginUsername};
-  position: relative;
-  height: 6.25em;
-  width: 60%;
-  margin: 0 auto;
-
-  &::after {
-    content: "";
-    width: 0px;
-    height: 0px;
-    position: absolute;
-    border-style: solid;
-    border-width: 0.5em 0.469em 0 0.469em;
-    border-color: ${colors.loginUsername} transparent transparent transparent;
-    top: 6.25em;
-    left: 50%;
-    margin-left: -0.496em;
-    z-index: 1;
-  }
-`;
-
-const StyledPassword = styled.div`
-  background-color: ${colors.loginPassword};
-  position: relative;
-  height: 6.25em;
-  width: 60%;
-  margin: 0 auto;
-
-  &.password-confirm {
-    opacity: 0.6;
-  }
-
-  &::after {
-    content: "";
-    width: 0px;
-    height: 0px;
-    position: absolute;
-    border-style: solid;
-    border-width: 0.5em 0.469em 0 0.469em;
-    border-color: ${colors.loginPassword} transparent transparent transparent;
-    bottom: -0.5em;
-    left: 50%;
-    margin-left: -0.496em;
-    z-index: 1;
-  }
-`;
-
 const StyledSignupBtn = styled.button`
   background-color: ${colors.loginButton};
   height: 6.25em;
@@ -257,6 +227,10 @@ const StyledSignupBtn = styled.button`
     color: ${colors.white};
     text-transform: uppercase;
   }
+
+  @media (max-width: 550px) {
+    width: 80%;
+  }
 `;
 
 const StyledLogin = styled(({ className, children, ...rest }) => (
@@ -268,7 +242,7 @@ const StyledLogin = styled(({ className, children, ...rest }) => (
   </Link>
 ))`
   color: ${colors.black};
-  margin-top: 10px;
+  margin-top: 40px;
   text-decoration: underline;
   cursor: pointer;
   display: block;

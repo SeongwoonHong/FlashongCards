@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import cx from 'classnames';
 import { colors } from 'constant';
@@ -24,10 +23,6 @@ const FlipCard = ({ card_id, front, back, creation_date, modification_Date, is_s
   );
 };
 
-FlipCard.propTypes = {
-  
-};
-
 export default FlipCard;
 
 const StyledFlipCard = styled.div`
@@ -45,6 +40,7 @@ const StyledFlipCard = styled.div`
   }
 
   .side {
+    white-space: pre-wrap;
     backface-visibility: hidden;
     position: absolute;
     top: 50px;
