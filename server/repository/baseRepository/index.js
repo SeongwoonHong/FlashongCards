@@ -1,4 +1,4 @@
-const mysql = require('./mysqlWrapper');
+const mysql = require('../../database/mysqlWrapper');
 
 class DAO {
   static get PRIMARY_KEY() {

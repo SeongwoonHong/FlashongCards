@@ -1,7 +1,7 @@
-const DAO = require('../../database/dao');
+const BaseRepository = require('../baseRepository');
 const jwtUtils = require('../../utils/jwt-utils');
 
-class User extends DAO {
+class UserRepository extends BaseRepository {
 
   static get TABLE_NAME() {
     return 'users';
@@ -118,4 +118,4 @@ class User extends DAO {
 
 }
 
-module.exports = User;
+module.exports = UserRepository;

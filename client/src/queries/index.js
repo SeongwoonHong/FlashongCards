@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const SIGNUP_MUTATION = gql`
-  mutation Signup($username: String!, $password: String!) {
-    signup(username: $username, password: $password) {
+  mutation Signup($username: String!, $password: String!, $passwordConfirm: String!) {
+    signup(username: $username, password: $password, passwordConfirm: $passwordConfirm) {
       user_id
       username
       signup_date
@@ -45,6 +45,16 @@ export const GET_ALL_CARDS_QUERY = gql`
       modification_date
       is_studied
       is_favorite
+    }
+  }
+`;
+
+export const LOGIN_MUTATION = gql`
+  mutation Login($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      user_id
+      username
+      token
     }
   }
 `;

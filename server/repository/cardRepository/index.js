@@ -1,7 +1,7 @@
-const DAO = require('../../database/dao');
+const BaseRepository = require('../baseRepository');
 const jwtUtils = require('../../utils/jwt-utils');
 
-class Card extends DAO {
+class CardRepository extends BaseRepository {
 
   static get TABLE_NAME() {
     return 'cards';
@@ -71,4 +71,4 @@ class Card extends DAO {
   // TODO: Update Card
 }
 
-module.exports = Card;
+module.exports = CardRepository;

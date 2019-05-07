@@ -1,6 +1,6 @@
 const { GraphQLObjectType } = require('graphql');
-const userQueries = require('../repository/user/queries');
-const cardQueries = require('../repository/card/queries');
+const userQueries = require('../repository/userRepository/queries');
+const cardQueries = require('../repository/cardRepository/queries');
 
 module.exports = new GraphQLObjectType({
   name: 'RootQueryType',

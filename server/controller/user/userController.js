@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const UserRepository = require('../../repository/user');
+const UserRepository = require('../../repository/userRepository');
 const validationUtils = require('../../utils/validation-utils');
 const jwtUtils = require('../../utils/jwt-utils');
 const bcryptUtils = require('../../utils/bcrpyt-utils');

@@ -97,11 +97,12 @@ const Signup = (props) => {
 
 const withSignupMutation = graphql(SIGNUP_MUTATION, {
   props: ({ mutate }) => ({
-    signup: (username, password) => {
+    signup: (username, password, passwordConfirm) => {
       mutate({
         variables: {
           username,
-          password
+          password,
+          passwordConfirm,
         }
       })
     }

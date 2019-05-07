@@ -2,27 +2,31 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { colors } from 'constant';
 import { InputBox } from 'components';
+import { graphql } from 'react-apollo';
+import { LOGIN_MUTATION } from 'queries';
 import { Link } from 'react-router-dom';
 import img from 'assets/login.jpg';
 
-const Login = () => {
+const Login = ({ login, loading }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  function login(e) {
+  function onSubmitHandler(e) {
     e.preventDefault();
-
+    console.log('loading = ', loading)
     if (username.trim() !== '' && password.trim() !== '') {
       console.log('username = ', username);
       console.log('password = ', password)
+      login(username, password);
+      console.log('loading = ', loading)
     }
   }
 
   return (
-    <StyledLogin onSubmit={login}>
+    <StyledLogin onSubmit={onSubmitHandler}>
       <StyledLeft>
         <StyledDiv>
-          <StyledHeader><strong>Hello!</strong> Welcome to my Todo application</StyledHeader>
+          <StyledHeader><strong>Hello!</strong> Welcome!</StyledHeader>
           <StyledSubHeader>Please login to enjoy it!</StyledSubHeader>
           <InputBox
             backgroundColor={colors.usernameTheme}
@@ -41,7 +45,7 @@ const Login = () => {
             inputBorderColor={colors.passwordTheme}
           >
             <input
-              type="text"
+              type="password"
               placeholder="Enter Password"
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -62,7 +66,20 @@ const Login = () => {
   );
 };
 
-export default Login;
+const withLoginMutation = graphql(LOGIN_MUTATION, {
+  props: ({ mutate }) => ({
+    login: (username, password) => {
+      mutate({
+        variables: {
+          username,
+          password,
+        }
+      })
+    }
+  })
+})
+
+export default withLoginMutation(Login);
 
 const StyledLogin = styled.form`
   text-transform: uppercase;
