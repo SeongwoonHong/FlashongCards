@@ -91,10 +91,14 @@ class UserRepository extends BaseRepository {
       if (user.length) {
         /**
          * If the user exists on the database, create a token and return it
+         * TODO: use user model instead of user[0].... 
          */
         const token = await jwtUtils.createToken({
-          username,
-          password
+          username: user[0].username,
+          user_id: user[0].user_id,
+          email: user[0].email,
+          signup_date: user[0].signup_date,
+          modification_date: user[0].modification_date,
         });
 
         return {

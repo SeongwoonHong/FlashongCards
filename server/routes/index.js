@@ -1,5 +1,6 @@
 const express = require('express');
 const graphql = require('./graphql');
+const { jwtMiddleware } = require('../middleware');
 
 module.exports = class Routes {
   constructor(app) {
@@ -7,6 +8,6 @@ module.exports = class Routes {
       throw new Error('You must provide an instance of express');
     }
 
-    app.use('/graphql', graphql);
+    app.use('/graphql', jwtMiddleware, graphql);
   }
 }

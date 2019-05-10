@@ -19,5 +19,14 @@ module.exports = {
   users: {
     type: new GraphQLList(type),
     resolve: UserController.getUsers.bind(UserController),
+  },
+  checkLogin: {
+    type,
+    args: {
+      token: {
+        type: GraphQLString
+      }
+    },
+    resolve: UserController.checkLogin.bind(UserController)
   }
 }

@@ -5,20 +5,28 @@ import { InputBox } from 'components';
 import { graphql } from 'react-apollo';
 import { LOGIN_MUTATION } from 'queries';
 import { Link } from 'react-router-dom';
+import { Cookies } from 'react-cookie';
 import img from 'assets/login.jpg';
 
-const Login = ({ login, loading }) => {
+const cookies = new Cookies();
+
+const Login = ({ loginMutation, loading }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  function onSubmitHandler(e) {
-    e.preventDefault();
-    console.log('loading = ', loading)
-    if (username.trim() !== '' && password.trim() !== '') {
-      console.log('username = ', username);
-      console.log('password = ', password)
-      login(username, password);
-      console.log('loading = ', loading)
+  async function onSubmitHandler(e) {
+    try {
+      e.preventDefault();
+      if (username.trim() !== '' && password.trim() !== '') {
+        const { data: { login } } = await loginMutation(username, password);
+        if (login) {
+          cookies.set('FLASHONG_AUTH_TOKEN', login.token, { path: '/' });
+        } else {
+
+        }
+      }
+    } catch (e) {
+      console.log(e);
     }
   }
 
@@ -68,8 +76,8 @@ const Login = ({ login, loading }) => {
 
 const withLoginMutation = graphql(LOGIN_MUTATION, {
   props: ({ mutate }) => ({
-    login: (username, password) => {
-      mutate({
+    loginMutation: (username, password) => {
+      return mutate({
         variables: {
           username,
           password,

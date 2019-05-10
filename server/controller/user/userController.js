@@ -93,6 +93,18 @@ class UserController {
       throw new Error(e);
     }
   }
+
+  static async checkLogin(_, __, { user }) {
+    try {
+      if (!user) {
+        throw new Error('You are not authenticated');
+      }
+
+      return this.getUser(_, { user_id: user.user_id });
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }
 
 module.exports = UserController;

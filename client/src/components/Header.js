@@ -1,30 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import styled from 'styled-components';
+import { Cookies } from 'react-cookie';
 import { colors } from 'constant';
-import { Link } from 'react-router-dom';
+import { graphql, compose } from 'react-apollo';
+import { CHECK_LOGIN } from 'queries';
+import { Link, withRouter } from 'react-router-dom';
 import cx from 'classnames';
 
-const Header = () => {
+const cookies = new Cookies();
+
+const token = cookies.get('FLASHONG_AUTH_TOKEN');
+
+const Header = ({ loading, checkLogin, history }) => {
   const [isMenuOpened, toggleIsMenuOpened] = useState(false);
+
+  function logout() {
+    toggleIsMenuOpened(false);
+    cookies.remove('FLASHONG_AUTH_TOKEN', { path: '/' });
+
+    return history.push('/login');
+  }
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <StyledHeader>
       <div>
         <div className={cx('submenu-container', { open: isMenuOpened } )}>
-          <Link
-            to="/login"
-            className="submenu"
-            onClick={() => toggleIsMenuOpened(false)}
-          >
-            <div className="submenu-text">Login</div>
-          </Link>
-          <Link
-            to="/signup"
-            className="submenu"
-            onClick={() => toggleIsMenuOpened(false)}
-          >
-            <div className="submenu-text">Sign up</div>
-          </Link>
+          {
+            checkLogin ? (
+              <Fragment>
+                <Link
+                  className="submenu"
+                  onClick={logout}
+                >
+                  <div className="submenu-text">Log Out</div>
+                </Link>
+              </Fragment>
+            )
+              :
+            (
+              <Fragment>
+                <Link
+                  to="/login"
+                  className="submenu"
+                  onClick={() => toggleIsMenuOpened(false)}
+                >
+                  <div className="submenu-text">Login</div>
+                </Link>
+                <Link
+                  to="/signup"
+                  className="submenu"
+                  onClick={() => toggleIsMenuOpened(false)}
+                >
+                  <div className="submenu-text">Sign up</div>
+                </Link>
+              </Fragment>
+            )
+          }
         </div>
       </div>
 
@@ -41,8 +76,24 @@ const Header = () => {
   );
 };
 
+const withCheckLogin = graphql(CHECK_LOGIN, {
+  options: (props) => ({
+    variables: {
+      token
+    }
+  }),
+  props: ({ data: { checkLogin, loading } }) => {
+    return {
+      checkLogin,
+      loading
+    }
+  }
+})
 
-export default Header;
+export default compose(
+  withRouter,
+  withCheckLogin
+)(Header);
 
 const StyledHeader = styled.div`
   position: fixed;

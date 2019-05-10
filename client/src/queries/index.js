@@ -58,3 +58,14 @@ export const LOGIN_MUTATION = gql`
     }
   }
 `;
+
+export const CHECK_LOGIN = gql`
+  query CheckLogin($token: String) {
+    checkLogin(token: $token) {
+      user_id
+      username
+      signup_date
+      email
+    }
+  }
+`;

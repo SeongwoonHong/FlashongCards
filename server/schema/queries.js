@@ -8,5 +8,6 @@ module.exports = new GraphQLObjectType({
     user: userQueries.user,
     users: userQueries.users,
     cards: cardQueries.cards,
+    checkLogin: userQueries.checkLogin
   }
 });
