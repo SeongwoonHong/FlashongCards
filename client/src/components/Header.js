@@ -2,7 +2,7 @@ import React, { useState, Fragment } from 'react';
 import styled from 'styled-components';
 import { Cookies } from 'react-cookie';
 import { colors } from 'constant';
-import { graphql, compose } from 'react-apollo';
+import { graphql, compose, ApolloConsumer } from 'react-apollo';
 import { CHECK_LOGIN } from 'queries';
 import { Link, withRouter } from 'react-router-dom';
 import cx from 'classnames';
@@ -14,9 +14,10 @@ const token = cookies.get('FLASHONG_AUTH_TOKEN');
 const Header = ({ loading, checkLogin, history }) => {
   const [isMenuOpened, toggleIsMenuOpened] = useState(false);
 
-  function logout() {
+  function logout(apolloClient) {
     toggleIsMenuOpened(false);
     cookies.remove('FLASHONG_AUTH_TOKEN', { path: '/' });
+    apolloClient.resetStore();
 
     return history.push('/login');
   }
@@ -26,53 +27,57 @@ const Header = ({ loading, checkLogin, history }) => {
   }
 
   return (
-    <StyledHeader>
-      <div>
-        <div className={cx('submenu-container', { open: isMenuOpened } )}>
-          {
-            checkLogin ? (
-              <Fragment>
-                <Link
-                  className="submenu"
-                  onClick={logout}
-                >
-                  <div className="submenu-text">Log Out</div>
-                </Link>
-              </Fragment>
-            )
-              :
-            (
-              <Fragment>
-                <Link
-                  to="/login"
-                  className="submenu"
-                  onClick={() => toggleIsMenuOpened(false)}
-                >
-                  <div className="submenu-text">Login</div>
-                </Link>
-                <Link
-                  to="/signup"
-                  className="submenu"
-                  onClick={() => toggleIsMenuOpened(false)}
-                >
-                  <div className="submenu-text">Sign up</div>
-                </Link>
-              </Fragment>
-            )
-          }
-        </div>
-      </div>
+    <ApolloConsumer>
+      {client => (
+        <StyledHeader>
+          <div>
+            <div className={cx('submenu-container', { open: isMenuOpened } )}>
+              {
+                checkLogin ? (
+                  <Fragment>
+                    <Link
+                      className="submenu"
+                      onClick={() => logout(client)}
+                    >
+                      <div className="submenu-text">Log Out</div>
+                    </Link>
+                  </Fragment>
+                )
+                  :
+                (
+                  <Fragment>
+                    <Link
+                      to="/login"
+                      className="submenu"
+                      onClick={() => toggleIsMenuOpened(false)}
+                    >
+                      <div className="submenu-text">Login</div>
+                    </Link>
+                    <Link
+                      to="/signup"
+                      className="submenu"
+                      onClick={() => toggleIsMenuOpened(false)}
+                    >
+                      <div className="submenu-text">Sign up</div>
+                    </Link>
+                  </Fragment>
+                )
+              }
+            </div>
+          </div>
 
-      <div
-        className={cx('hamburger-menu', { open: isMenuOpened })}
-        onClick={() => toggleIsMenuOpened(!isMenuOpened)}
-      >
-        <span className="menu-item"></span>
-        <span className="menu-item"></span>
-        <span className="menu-item"></span>
-      </div>
-      <StyledHeaderText to="/main">Flashong Cards</StyledHeaderText> 
-    </StyledHeader>
+          <div
+            className={cx('hamburger-menu', { open: isMenuOpened })}
+            onClick={() => toggleIsMenuOpened(!isMenuOpened)}
+          >
+            <span className="menu-item"></span>
+            <span className="menu-item"></span>
+            <span className="menu-item"></span>
+          </div>
+          <StyledHeaderText to="/main">Flashong Cards</StyledHeaderText> 
+        </StyledHeader>
+      )}
+    </ApolloConsumer>
   );
 };
 

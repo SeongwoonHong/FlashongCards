@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { colors } from 'constant';
 import { InputBox } from 'components';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import { LOGIN_MUTATION } from 'queries';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
 import img from 'assets/login.jpg';
 
 const cookies = new Cookies();
 
-const Login = ({ loginMutation, loading }) => {
+const Login = ({ loginMutation, loading, history }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -19,10 +19,12 @@ const Login = ({ loginMutation, loading }) => {
       e.preventDefault();
       if (username.trim() !== '' && password.trim() !== '') {
         const { data: { login } } = await loginMutation(username, password);
+
         if (login) {
           cookies.set('FLASHONG_AUTH_TOKEN', login.token, { path: '/' });
+          history.push('/main');
         } else {
-
+          alert('Credential Error'); // TODO: toast message
         }
       }
     } catch (e) {
@@ -87,7 +89,10 @@ const withLoginMutation = graphql(LOGIN_MUTATION, {
   })
 })
 
-export default withLoginMutation(Login);
+export default compose(
+  withLoginMutation,
+  withRouter
+)(Login);
 
 const StyledLogin = styled.form`
   text-transform: uppercase;

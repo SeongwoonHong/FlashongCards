@@ -21,12 +21,11 @@ const Main = props => {
     >
       {({ loading, data, client }) => {
         if (loading) return <Loader />;
-        console.log('data = ', data);
-        if (!data.checkedLogin) {
+
+        if (!data || !data.checkLogin) {
           return <Redirect to="/login" />;
         }
         
-        console.log('here')
         client.writeData({ data: {
           currentUser: data.checkLogin
         }});
