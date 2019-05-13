@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { colors } from 'constant';
 import { InputBox } from 'components';
@@ -10,9 +10,17 @@ import img from 'assets/login.jpg';
 
 const cookies = new Cookies();
 
+
 const Login = ({ loginMutation, loading, history }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const token = cookies.get('FLASHONG_AUTH_TOKEN');
+
+  useEffect(() => {
+    if (token) {
+      history.push('/main');
+    }
+  });
 
   async function onSubmitHandler(e) {
     try {

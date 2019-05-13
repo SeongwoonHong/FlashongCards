@@ -57,6 +57,5 @@ const StyledIndex = styled.div`
 `;
 
 export default compose(
-  // withGetCardList,
   withDeleteCardList,
 )(FlipCardList);
