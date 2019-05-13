@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { graphql } from 'react-apollo';
-import { ADD_CARD_MUTATION, GET_ALL_CARDS_QUERY } from 'queries';
+import { graphql, compose } from 'react-apollo';
+import { ADD_CARD_MUTATION, GET_ALL_CARDS_QUERY, GET_CURRENT_USER } from 'queries';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import styled from 'styled-components';
 
-const AddCard = ({ addCard }) => {
+const AddCard = ({ addCard, currentUser }) => {
   const [front, setFront] = useState('');
   const [back, setBack] = useState('');
 
@@ -14,7 +14,7 @@ const AddCard = ({ addCard }) => {
     e.preventDefault();
 
     if (front.trim() !== '' && back.trim() !== '') {
-      addCard(1, front, back);
+      addCard(currentUser.user_id, front, back);
       
       setFront('');
       setBack('');
@@ -70,15 +70,21 @@ const StyledAddCard = styled.div`
   }
 `;
 
+const withCurrentUser = graphql(GET_CURRENT_USER, {
+  props: ({ data: { currentUser } }) => ({
+    currentUser
+  })
+})
+
 const withAddCardMutation = graphql(ADD_CARD_MUTATION, {
-  props: ({ mutate }) => ({
+  props: ({ mutate, currentUser }) => ({
     addCard: (user_id, front, back) => {
       mutate({
         variables: { user_id, front, back },
         refetchQueries: [
           {
             query: GET_ALL_CARDS_QUERY,
-            variables: { user_id: 1 }
+            variables: { user_id }
           }
         ]
       })
@@ -86,5 +92,8 @@ const withAddCardMutation = graphql(ADD_CARD_MUTATION, {
   })
 })
 
-export default withAddCardMutation(AddCard);
+export default compose(
+  withCurrentUser,
+  withAddCardMutation
+)(AddCard);
 

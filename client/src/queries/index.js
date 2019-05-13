@@ -69,3 +69,12 @@ export const CHECK_LOGIN = gql`
     }
   }
 `;
+
+export const GET_CURRENT_USER = gql`
+  query CurrentUser {
+    currentUser @client {
+      user_id
+      username
+    }
+  }
+`;

@@ -5,9 +5,9 @@ const jwtUtils = require('../../utils/jwt-utils');
 const bcryptUtils = require('../../utils/bcrpyt-utils');
 
 class CardController {
-  static async addCard(_, { front, back, category = 1 }) { // for now, all cards are going to be category 1.
+  static async addCard(_, { user_id, front, back, category = 1 }) { // for now, all cards are going to be category 1.
     try {
-      const cardRes = await CardRepository.createCard({ user_id: 1, front, back, category }); // for now, user id is 1 hard coded
+      const cardRes = await CardRepository.createCard({ user_id, front, back, category });
 
       return cardRes;
     } catch (e) {

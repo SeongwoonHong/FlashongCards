@@ -25,7 +25,7 @@ const Main = props => {
         if (!data || !data.checkLogin) {
           return <Redirect to="/login" />;
         }
-        
+
         client.writeData({ data: {
           currentUser: data.checkLogin
         }});

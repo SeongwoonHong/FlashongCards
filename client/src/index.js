@@ -4,6 +4,7 @@ import { ApolloClient } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { createHttpLink } from 'apollo-link-http';
+import gql from 'graphql-tag';
 import { setContext } from 'apollo-link-context';
 import { CookiesProvider, Cookies } from 'react-cookie';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -33,12 +34,30 @@ const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache,
   resolvers: {
+    // Query: {
+    //   getCurrentUser: (_, __, { cache }) => {
+    //     const query = gql`
+    //       query CurrentUser {
+    //         currentUser @client {
+    //           user_id
+    //           username
+    //         }
+    //       }
+    //     `;
+
+    //     const data = cache.readQuery({ query });
+    //     console.log('here data = ', data);
+    //     return data;
+    //   }
+    // }
   }
 });
 
 cache.writeData({
   data: {
-    currentUser: {}
+    currentUser: {
+      __typename: 'UserType'
+    }
   },
 })
 console.log('cache = ', cache);

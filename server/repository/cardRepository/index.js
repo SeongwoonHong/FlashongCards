@@ -31,9 +31,10 @@ class CardRepository extends BaseRepository {
     }
   }
 
-  static async getAllCards(user_id) {
+  static async getAllCards({user_id}) {
     try {
       const result = await this.findByFields({ fields: { user_id } });
+
       return result;
     } catch (e) {
       throw new Error(e);

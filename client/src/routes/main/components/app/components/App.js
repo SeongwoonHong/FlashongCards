@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose, graphql } from 'react-apollo';
-import { GET_ALL_CARDS_QUERY } from 'queries';
+import { GET_ALL_CARDS_QUERY, GET_CURRENT_USER } from 'queries';
 import { Button, Loader, Footer } from 'components';
 import styled from 'styled-components';
 import FlipCardList from './FlipCardList';
@@ -75,12 +75,20 @@ const App = ({ cards, loading, history }) => {
   );
 }
 
+const withCurrentUser = graphql(GET_CURRENT_USER, {
+  props: ({ data: { currentUser } }) => ({
+    currentUser
+  })
+})
+
 const withGetCardList = graphql(GET_ALL_CARDS_QUERY, {
-  options: (props) => ({
-    variables: {
-      user_id: 1, // for now it's hard coded
-    },
-  }),
+  options: ({ currentUser }) => {
+    return {
+      variables: {
+        user_id: currentUser.user_id,
+      },
+    }
+  },
   props: ({ data: { cards, loading } }) => ({
     cards,
     loading,
@@ -99,5 +107,6 @@ const StyledTabContainer = styled.div`
 
 export default compose(
   withRouter,
-  withGetCardList
+  withCurrentUser,
+  withGetCardList,
 )(App);
