@@ -9,5 +9,6 @@ module.exports = new GraphQLObjectType({
     login: userMutations.login,
     addCard: cardMutations.addCard,
     deleteCard: cardMutations.deleteCard,
+    updateCard: cardMutations.updateCard,
   }
 });

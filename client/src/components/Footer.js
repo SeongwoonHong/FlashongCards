@@ -5,9 +5,9 @@ import AddIcon from '@material-ui/icons/Add';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SearchIcon from '@material-ui/icons/Search';
 
-const Footer = ({ navigateToAddCard }) => {
+const Footer = ({ navigateToAddCard, isHide }) => {
   return (
-    <StyledFooter>
+    <StyledFooter isHide={isHide}>
       <div onClick={navigateToAddCard}>
         <AddIcon />
       </div>
@@ -27,6 +27,7 @@ const StyledFooter = styled.div`
   bottom: 0;
   left: 0;
   background-color: ${colors.headerTheme};
+  display: ${props => props.isHide ? 'none' : 'block'};
 
   div {
     width: 33%;

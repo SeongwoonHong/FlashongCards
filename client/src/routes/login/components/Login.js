@@ -10,7 +10,6 @@ import img from 'assets/login.jpg';
 
 const cookies = new Cookies();
 
-
 const Login = ({ loginMutation, loading, history }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

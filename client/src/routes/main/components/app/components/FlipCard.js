@@ -2,8 +2,19 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames';
 import { colors } from 'constant';
+import { UPDATE_CARD } from 'queries';
+import FilpCardUtils from './FlipCardUtils';
 
-const FlipCard = ({ card_id, front, back, creation_date, modification_Date, is_studied, is_favorite }) => {
+const FlipCard = ({
+  card_id,
+  front, back,
+  creation_date,
+  modification_Date,
+  is_studied,
+  is_favorite,
+  toggleIsFavorite,
+  toggleIsStudied
+}) => {
   const [isFliped, setIsFliped] = useState(false);
 
   return (
@@ -19,6 +30,12 @@ const FlipCard = ({ card_id, front, back, creation_date, modification_Date, is_s
           {back}
         </div>
       </div>
+      <FilpCardUtils
+        toggleIsFavorite={toggleIsFavorite}
+        toggleIsStudied={toggleIsStudied}
+        isStudied={is_studied}
+        isFavorite={is_favorite}
+      />
     </StyledFlipCard>
   );
 };

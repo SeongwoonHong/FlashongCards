@@ -70,6 +70,22 @@ class CardRepository extends BaseRepository {
     }
   }
   // TODO: Update Card
+
+  static async updateCard({ user_id, is_studied, is_favorite, card_id }) {
+    try {
+      const updateResult = this.update({
+        data: {
+          is_studied,
+          is_favorite
+        },
+        id: card_id,
+      });
+      console.log('updateResult = ', updateResult);
+      return updateResult;
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
 }
 
 module.exports = CardRepository;

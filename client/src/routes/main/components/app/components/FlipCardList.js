@@ -7,11 +7,24 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import FlipCard from './FlipCard';
 
-const FlipCardList = ({ cards, removeCard, loading }) => {
+const FlipCardList = ({
+  cards,
+  removeCard,
+  loading,
+  currentUser
+}) => {
   const [index, setIndex] = useState(1);
 
   if (loading) {
     return null;
+  }
+
+  function toggleIsFavorite(card_id, is_favorite) {
+
+  }
+
+  function toggleIsStudied(card_id, is_studied) {
+
   }
 
   const sliderSettings = {
@@ -30,6 +43,8 @@ const FlipCardList = ({ cards, removeCard, loading }) => {
                 {...card}
                 key={card.card_id}
                 removeCard={(id) => removeCard(card.card_id)}
+                toggleIsFavorite={() => toggleIsFavorite(card.card_id, !card.is_favorite)}
+                toggleIsStudied={() => toggleIsStudied(card.card_id, !card.is_studied)}
               />
             );
           })

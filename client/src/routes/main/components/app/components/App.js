@@ -8,7 +8,7 @@ import FlipCardList from './FlipCardList';
 import CardList from './CardList';
 import Tab from './Tab';
 
-const App = ({ cards, loading, history }) => {
+const App = ({ cards, loading, history, currentUser }) => {
   const [mode, setMode] = useState('list');
   const [tabFilter, setTabFilter] = useState('All');
 
@@ -54,7 +54,10 @@ const App = ({ cards, loading, history }) => {
     }
 
     return (
-      <FlipCardList cards={cards} />
+      <FlipCardList
+        cards={cards}
+        currentUser={currentUser}
+      />
     );
   }
 
@@ -70,6 +73,7 @@ const App = ({ cards, loading, history }) => {
       {renderBody()}
       <Footer
         navigateToAddCard={navigateToAddCard}
+        isHide={mode === 'study'}
       />
     </Fragment>
   );

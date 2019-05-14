@@ -65,7 +65,6 @@ class DAO {
   }
 
   static async insert({ data }) {
-    console.log(data);
     const result = await mysql.createQuery({
       query: `INSERT INTO ${this.TABLE_NAME}
               SET ?;`,
