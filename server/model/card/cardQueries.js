@@ -3,7 +3,7 @@ const {
   GraphQLID,
   GraphQLString,
 } = require('graphql');
-const type = require('./type');
+const type = require('./cardType');
 const CardController = require('../../controller/card/cardController');
 
 module.exports = {

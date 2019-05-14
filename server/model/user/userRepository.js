@@ -1,4 +1,4 @@
-const BaseRepository = require('../baseRepository');
+const BaseRepository = require('../base/baseRepository');
 const jwtUtils = require('../../utils/jwt-utils');
 
 class UserRepository extends BaseRepository {

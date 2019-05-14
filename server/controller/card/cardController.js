@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const CardRepository = require('../../repository/cardRepository');
+const CardRepository = require('../../model/card/cardRepository');
 const validationUtils = require('../../utils/validation-utils');
 const jwtUtils = require('../../utils/jwt-utils');
 const bcryptUtils = require('../../utils/bcrpyt-utils');
