@@ -1,6 +1,6 @@
 const { GraphQLObjectType } = require('graphql');
-const userMutations = require('../repository/userRepository/mutations');
-const cardMutations = require('../repository/cardRepository/mutations');
+const userMutations = require('../model/user/userMutations');
+const cardMutations = require('../model/card/cardMutations');
 
 module.exports = new GraphQLObjectType({
   name: 'RootMutationType',
