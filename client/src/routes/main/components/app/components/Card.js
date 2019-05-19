@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { graphql, compose } from 'react-apollo';
-import { DELETE_CARD_MUTATION, GET_ALL_CARDS_QUERY, GET_CURRENT_USER } from 'queries';
+import { DELETE_CARD_MUTATION, GET_ALL_CARDS_QUERY } from 'queries';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -46,12 +46,6 @@ const Card = ({ deleteCard, data : { card_id, user_id, front, back, creation_dat
   );
 }
 
-const withCurrentUser = graphql(GET_CURRENT_USER, {
-  props: ({ data: { currentUser } }) => ({
-    currentUser
-  })
-})
-
 const withDeleteCardMutation = graphql(DELETE_CARD_MUTATION, {
   props: ({ mutate }) => ({
     deleteCard: (card_id, user_id) => {
@@ -69,6 +63,5 @@ const withDeleteCardMutation = graphql(DELETE_CARD_MUTATION, {
 });
 
 export default compose(
-  withCurrentUser,
   withDeleteCardMutation
 )(Card);

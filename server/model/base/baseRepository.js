@@ -56,8 +56,8 @@ class DAO {
   static async update({ data, id }) {
     const result = await mysql.createQuery({
       query: `UPDATE ??
-              SET ?
-              WHERE ?? = ? AND modification_date = CURRENT_TIMESTAMP;`,
+              SET ?, modification_date = CURRENT_TIMESTAMP
+              WHERE ?? = ?;`,
       params: [this.TABLE_NAME, data, this.PRIMARY_KEY, id]
     });
 

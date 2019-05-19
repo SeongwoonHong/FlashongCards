@@ -69,19 +69,22 @@ class CardRepository extends BaseRepository {
       throw new Error(e);
     }
   }
-  // TODO: Update Card
 
-  static async updateCard({ user_id, is_studied, is_favorite, card_id }) {
+  static async updateCard({ is_studied, is_favorite, card_id }) {
     try {
-      const updateResult = this.update({
+      await this.update({
         data: {
           is_studied,
           is_favorite
         },
         id: card_id,
       });
-      console.log('updateResult = ', updateResult);
-      return updateResult;
+
+      return {
+        is_studied,
+        is_favorite,
+        card_id
+      };
     } catch (e) {
       throw new Error(e);
     }

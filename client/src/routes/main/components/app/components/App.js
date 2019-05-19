@@ -48,7 +48,9 @@ const App = ({ cards, loading, history, currentUser }) => {
               isActive={tabFilter === 'Studied'}
             />
           </StyledTabContainer>
-          <CardList cards={cards} />
+          <CardList
+            cards={cards}
+          />
         </Fragment>
       );
     }

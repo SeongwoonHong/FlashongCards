@@ -5,19 +5,19 @@ import styled from 'styled-components';
 import cx from 'classnames';
 
 const FlipCardUtils = ({
-  checkIsFavorite,
-  checkIsStudied,
+  toggleIsFavorite,
+  toggleIsStudied,
   isStudied,
   isFavorite
 }) => {
   return (
     <StyledFlipCardUtils>
       <StarIcon
-        onClick={checkIsFavorite}
+        onClick={toggleIsFavorite}
         className={cx('favorite', { active: isFavorite })}
       />
       <CheckIcon
-        onClick={checkIsStudied}
+        onClick={toggleIsStudied}
         className={cx({ active: isStudied })}
       />
     </StyledFlipCardUtils>

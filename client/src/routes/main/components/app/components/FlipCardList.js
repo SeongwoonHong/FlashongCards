@@ -1,30 +1,24 @@
 import React, { useState } from 'react';
 import Slider from 'react-slick';
 import { graphql, compose } from 'react-apollo';
-import { DELETE_CARD_MUTATION } from 'queries';
+import { DELETE_CARD_MUTATION, UPDATE_CARD, GET_ALL_CARDS_QUERY } from 'queries';
 import styled from 'styled-components';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import FlipCard from './FlipCard';
+import FilpCardUtils from './FlipCardUtils';
 
 const FlipCardList = ({
   cards,
   removeCard,
   loading,
-  currentUser
+  currentUser,
+  updateCard,
 }) => {
   const [index, setIndex] = useState(1);
 
   if (loading) {
     return null;
-  }
-
-  function toggleIsFavorite(card_id, is_favorite) {
-
-  }
-
-  function toggleIsStudied(card_id, is_studied) {
-
   }
 
   const sliderSettings = {
@@ -43,17 +37,40 @@ const FlipCardList = ({
                 {...card}
                 key={card.card_id}
                 removeCard={(id) => removeCard(card.card_id)}
-                toggleIsFavorite={() => toggleIsFavorite(card.card_id, !card.is_favorite)}
-                toggleIsStudied={() => toggleIsStudied(card.card_id, !card.is_studied)}
               />
             );
           })
         }
       </Slider>
+      <FilpCardUtils
+        toggleIsFavorite={() => updateCard(cards[index - 1].card_id, cards[index - 1].is_studied, !cards[index - 1].is_favorite, currentUser.user_id)}
+        toggleIsStudied={() => updateCard(cards[index - 1].card_id, !cards[index - 1].is_studied, cards[index - 1].is_favorite, currentUser.user_id)}
+        isStudied={cards[index - 1].is_studied}
+        isFavorite={cards[index - 1].is_favorite}
+      />
     </div>
   );
 };
 
+const withUpdateCard = graphql(UPDATE_CARD, {
+  props: ({ mutate }) => ({
+    updateCard: (card_id, is_studied, is_favorite, user_id) => {
+      mutate({
+        variables: {
+          card_id,
+          is_studied,
+          is_favorite,
+        },
+        refetchQueries: [
+          {
+            query: GET_ALL_CARDS_QUERY,
+            variables: { user_id }
+          }
+        ]
+      })
+    }
+  })
+})
 
 const withDeleteCardList = graphql(DELETE_CARD_MUTATION, {
   props: ({ mutate }) => ({
@@ -73,4 +90,5 @@ const StyledIndex = styled.div`
 
 export default compose(
   withDeleteCardList,
+  withUpdateCard
 )(FlipCardList);

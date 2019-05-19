@@ -1,42 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import styled from 'styled-components';
 import cx from 'classnames';
 import { colors } from 'constant';
 import { UPDATE_CARD } from 'queries';
-import FilpCardUtils from './FlipCardUtils';
+
 
 const FlipCard = ({
   card_id,
   front, back,
   creation_date,
   modification_Date,
-  is_studied,
-  is_favorite,
-  toggleIsFavorite,
-  toggleIsStudied
 }) => {
   const [isFliped, setIsFliped] = useState(false);
 
   return (
-    <StyledFlipCard
-      onClick={() => setIsFliped(!isFliped)}
-      className={cx('card--container', { flip: isFliped })}
-    >
-      <div className="card-flipper">
-        <div className="side front">
-          {front}
+    <Fragment>
+      <StyledFlipCard
+        onClick={() => setIsFliped(!isFliped)}
+        className={cx('card--container', { flip: isFliped })}
+      >
+        <div className="card-flipper">
+          <div className="side front">
+            {front}
+          </div>
+          <div className="side back">
+            {back}
+          </div>
         </div>
-        <div className="side back">
-          {back}
-        </div>
-      </div>
-      <FilpCardUtils
-        toggleIsFavorite={toggleIsFavorite}
-        toggleIsStudied={toggleIsStudied}
-        isStudied={is_studied}
-        isFavorite={is_favorite}
-      />
-    </StyledFlipCard>
+      </StyledFlipCard>
+    </Fragment>
   );
 };
 
