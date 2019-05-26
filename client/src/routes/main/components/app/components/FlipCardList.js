@@ -14,6 +14,9 @@ const FlipCardList = ({
   loading,
   currentUser,
   updateCard,
+  toggleUpdateCard,
+  setEditData,
+  setModalMode,
 }) => {
   const [index, setIndex] = useState(1);
 
@@ -47,6 +50,13 @@ const FlipCardList = ({
         toggleIsStudied={() => updateCard(cards[index - 1].card_id, !cards[index - 1].is_studied, cards[index - 1].is_favorite, currentUser.user_id)}
         isStudied={cards[index - 1].is_studied}
         isFavorite={cards[index - 1].is_favorite}
+        toggleUpdateCard={() => {
+          setEditData({
+            ...cards[index - 1]
+          });
+          setModalMode('EDIT_CARD');
+          toggleUpdateCard();
+        }}
       />
     </div>
   );

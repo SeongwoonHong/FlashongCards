@@ -80,10 +80,12 @@ export const GET_CURRENT_USER = gql`
 `;
 
 export const UPDATE_CARD = gql`
-  mutation UpdateCard($card_id: ID!, $is_studied: Boolean, $is_favorite: Boolean) {
-    updateCard(card_id: $card_id, is_studied: $is_studied, is_favorite: $is_favorite) {
+  mutation UpdateCard($card_id: ID!, $is_studied: Boolean, $is_favorite: Boolean, $front: String, $back: String) {
+    updateCard(card_id: $card_id, is_studied: $is_studied, is_favorite: $is_favorite, front: $front, back: $back) {
       user_id
       card_id
+      front
+      back
       is_studied
       is_favorite
     }

@@ -70,12 +70,14 @@ class CardRepository extends BaseRepository {
     }
   }
 
-  static async updateCard({ is_studied, is_favorite, card_id }) {
+  static async updateCard({ is_studied, is_favorite, card_id, front, back }) {
     try {
       await this.update({
         data: {
           is_studied,
-          is_favorite
+          is_favorite,
+          front,
+          back,
         },
         id: card_id,
       });
@@ -83,6 +85,8 @@ class CardRepository extends BaseRepository {
       return {
         is_studied,
         is_favorite,
+        front,
+        back,
         card_id
       };
     } catch (e) {

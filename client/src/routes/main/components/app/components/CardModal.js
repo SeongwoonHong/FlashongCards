@@ -1,23 +1,35 @@
 import React, { useState } from 'react';
 import { graphql, compose } from 'react-apollo';
-import { ADD_CARD_MUTATION, GET_ALL_CARDS_QUERY, GET_CURRENT_USER } from 'queries';
+import { ADD_CARD_MUTATION, GET_ALL_CARDS_QUERY, GET_CURRENT_USER, UPDATE_CARD } from 'queries';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import styled from 'styled-components';
 
-const AddCard = ({ addCard, currentUser }) => {
-  const [front, setFront] = useState('');
-  const [back, setBack] = useState('');
+const AddCard = ({
+  addCard,
+  updateCard,
+  currentUser,
+  mode = 'ADD_CARD',
+  editData = {},
+  closeModal,
+}) => {
+  const [front, setFront] = useState(mode === 'ADD_CARD' ? '' : editData.front);
+  const [back, setBack] = useState(mode === 'ADD_CARD' ? '' : editData.back);
 
   function onClickHandler(e) {
     e.preventDefault();
 
     if (front.trim() !== '' && back.trim() !== '') {
-      addCard(currentUser.user_id, front, back);
-      
-      setFront('');
-      setBack('');
+      if (mode === 'ADD_CARD') {
+        addCard(currentUser.user_id, front, back);
+        
+        setFront('');
+        setBack('');
+      } else {
+        updateCard(currentUser.user_id, editData.card_id, front, back);
+      }
+      return closeModal();
     }
   }
 
@@ -52,7 +64,7 @@ const AddCard = ({ addCard, currentUser }) => {
         color="primary"
         onClick={onClickHandler}
       >
-        Add
+        { mode === 'ADD_CARD' ? 'ADD' : 'UPDATE' }
       </Button>
     </StyledAddCard>
   );
@@ -92,8 +104,25 @@ const withAddCardMutation = graphql(ADD_CARD_MUTATION, {
   })
 })
 
+const withUpdateCardMutation = graphql(UPDATE_CARD, {
+  props: ({ mutate, currentUser }) => ({
+    updateCard: (user_id, card_id, front, back) => {
+      mutate({
+        variables: { card_id, front, back },
+        refetchQueries: [
+          {
+            query: GET_ALL_CARDS_QUERY,
+            variables: { user_id }
+          }
+        ]
+      })
+    }
+  })
+})
+
 export default compose(
   withCurrentUser,
-  withAddCardMutation
+  withAddCardMutation,
+  withUpdateCardMutation,
 )(AddCard);
 

@@ -54,11 +54,19 @@ class DAO {
   }
 
   static async update({ data, id }) {
+    const refinedData = Object.keys(data)
+                              .filter(item => data[item] !== undefined && data[item] !== null)
+                              .reduce((acc, item) => {
+                                return {
+                                  ...acc,
+                                  [item]: data[item]
+                                }
+                              }, {});
     const result = await mysql.createQuery({
       query: `UPDATE ??
               SET ?, modification_date = CURRENT_TIMESTAMP
               WHERE ?? = ?;`,
-      params: [this.TABLE_NAME, data, this.PRIMARY_KEY, id]
+      params: [this.TABLE_NAME, refinedData, this.PRIMARY_KEY, id]
     });
 
     return result;

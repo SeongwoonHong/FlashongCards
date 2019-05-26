@@ -5,10 +5,10 @@ import AddIcon from '@material-ui/icons/Add';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SearchIcon from '@material-ui/icons/Search';
 
-const Footer = ({ navigateToAddCard, isHide }) => {
+const Footer = ({ openAddCard, isHide }) => {
   return (
     <StyledFooter isHide={isHide}>
-      <div onClick={navigateToAddCard}>
+      <div onClick={openAddCard}>
         <AddIcon />
       </div>
       <div>

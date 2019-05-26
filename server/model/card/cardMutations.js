@@ -30,6 +30,8 @@ module.exports = {
       card_id: { type: new GraphQLNonNull(GraphQLID) },
       is_studied: { type: GraphQLBoolean },
       is_favorite: { type: GraphQLBoolean },
+      front: { type: GraphQLString },
+      back: { type: GraphQLString },
     },
     resolve: CardController.updateCard.bind(CardController),
   }

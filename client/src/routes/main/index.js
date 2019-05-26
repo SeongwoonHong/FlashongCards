@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import App from './components/app';
-import AddCard from './components/add-card';
+// import AddCard from './components/add-card';
 import { Query } from 'react-apollo';
 import { Cookies } from 'react-cookie';
 import { CHECK_LOGIN } from 'queries';
@@ -35,7 +35,7 @@ const Main = props => {
             <StyledSwitch>
               <Switch>
                 <Route exact path="/main" component={App} />
-                <Route path="/main/add-card" component={AddCard} />
+                {/* <Route path="/main/add-card" component={AddCard} /> */}
               </Switch>
             </StyledSwitch>
           </Fragment>

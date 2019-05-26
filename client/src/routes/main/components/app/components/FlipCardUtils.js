@@ -1,6 +1,7 @@
 import React from 'react';
 import StarIcon from '@material-ui/icons/Star';
 import CheckIcon from '@material-ui/icons/CheckCircleOutline';
+import EditIcon from '@material-ui/icons/EditOutlined';
 import styled from 'styled-components';
 import cx from 'classnames';
 
@@ -8,7 +9,8 @@ const FlipCardUtils = ({
   toggleIsFavorite,
   toggleIsStudied,
   isStudied,
-  isFavorite
+  isFavorite,
+  toggleUpdateCard,
 }) => {
   return (
     <StyledFlipCardUtils>
@@ -20,21 +22,23 @@ const FlipCardUtils = ({
         onClick={toggleIsStudied}
         className={cx({ active: isStudied })}
       />
+      <EditIcon
+        onClick={toggleUpdateCard}
+      />
     </StyledFlipCardUtils>
   );
 };
 
 const StyledFlipCardUtils = styled.div`
-  text-align: center;
   margin-top: 20px;
+  display: flex;
+  justify-content: space-evenly;
   
   .active {
     color: green;    
   }
 
   .favorite {
-    margin-right: 50px;
-
     &.active {
       color: yellow;
     }

@@ -35,13 +35,13 @@ class CardController {
     }
   }
   // TODO: Update Card
-  static async updateCard(_, { card_id, is_studied, is_favorite }, { user }) {
+  static async updateCard(_, { card_id, is_studied, is_favorite, front, back }, { user }) {
     try {
       if (!user) {
         throw new Error('Not authenticated');
       }
 
-      const cardRes = await CardRepository.updateCard({ card_id, is_studied, is_favorite });
+      const cardRes = await CardRepository.updateCard({ card_id, is_studied, is_favorite, front, back });
 
       return cardRes;
     } catch (e) {

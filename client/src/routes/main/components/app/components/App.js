@@ -4,24 +4,45 @@ import { compose, graphql } from 'react-apollo';
 import { GET_ALL_CARDS_QUERY, GET_CURRENT_USER } from 'queries';
 import { Button, Loader, Footer } from 'components';
 import styled from 'styled-components';
+import Modal from 'react-modal';
 import FlipCardList from './FlipCardList';
 import CardList from './CardList';
 import Tab from './Tab';
+import AddCard from './CardModal';
+
+const modalStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    width: '80%'
+  }
+};
 
 const App = ({ cards, loading, history, currentUser }) => {
   const [mode, setMode] = useState('list');
   const [tabFilter, setTabFilter] = useState('All');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState('ADD_CARD');
+  const [editData, setEditData] = useState({});
 
-  function navigateToAddCard() {
-    history.push('/main/add-card');
-  }
-  
   if (loading) {
     return <Loader />;
   }
 
   function countTotalNumberOfField(field) {
     return cards.reduce((count, a) => a[field] ? count + 1 : count, 0);
+  }
+
+  function openModal() {
+    setIsModalOpen(true);
+  }
+
+  function closeModal() {
+    setIsModalOpen(false);
   }
 
   function renderBody() {
@@ -59,6 +80,9 @@ const App = ({ cards, loading, history, currentUser }) => {
       <FlipCardList
         cards={cards}
         currentUser={currentUser}
+        toggleUpdateCard={openModal}
+        setEditData={setEditData}
+        setModalMode={setModalMode}
       />
     );
   }
@@ -74,9 +98,25 @@ const App = ({ cards, loading, history, currentUser }) => {
       </StyledButtonContainer>
       {renderBody()}
       <Footer
-        navigateToAddCard={navigateToAddCard}
         isHide={mode === 'study'}
+        openAddCard={() => {
+          openModal();
+          setModalMode('ADD_CARD');
+        }}
       />
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        ariaHideApp={false}
+        style={modalStyles}
+        contentLabel="CARD_MODAL"
+      >
+        <AddCard
+          mode={modalMode}
+          editData={editData}
+          closeModal={closeModal}
+        />
+      </Modal>
     </Fragment>
   );
 }
