@@ -76,14 +76,21 @@ class UserController {
       /**
        * checking user with username and password
        */
+      if (password.trim() !== passwordConfirm.trim()) {
+        throw new Error("Password doesn't match");
+      }
+
       const user = await UserRepository.findByFields({
         fields: {
           username,
         }
       });
+      let hashedPassword;
 
       if (!user.length) {
-        const userRes = await UserRepository.createUser({ username, password });
+        hashedPassword = await bcryptUtils.hash(password);
+
+        const userRes = await UserRepository.createUser({ username, password: hashedPassword });
 
         return userRes;
       } else {

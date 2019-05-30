@@ -1,5 +1,6 @@
 const BaseRepository = require('../base/baseRepository');
 const jwtUtils = require('../../utils/jwt-utils');
+const bcrpytUtils = require('../../utils/bcrpyt-utils');
 
 class UserRepository extends BaseRepository {
 
@@ -83,28 +84,37 @@ class UserRepository extends BaseRepository {
        */
       const user = await this.findByFields({
         fields: {
-          username,
-          password
+          username
         }
       });
+      let passwordMatched = false;
 
       if (user.length) {
         /**
          * If the user exists on the database, create a token and return it
          * TODO: use user model instead of user[0].... 
          */
-        const token = await jwtUtils.createToken({
-          username: user[0].username,
-          user_id: user[0].user_id,
-          email: user[0].email,
-          signup_date: user[0].signup_date,
-          modification_date: user[0].modification_date,
-        });
+        passwordMatched = await bcrpytUtils.compare(password, user[0].password);
 
-        return {
-          token,
-          ...user[0],
-          success: true,
+        if (passwordMatched) {
+          const token = await jwtUtils.createToken({
+            username: user[0].username,
+            user_id: user[0].user_id,
+            email: user[0].email,
+            signup_date: user[0].signup_date,
+            modification_date: user[0].modification_date,
+          });
+  
+          return {
+            token,
+            ...user[0],
+            success: true,
+          }
+        } else {
+          return {
+            success: false,
+            message: 'Password does not match',
+          }
         }
       } else {
         /**
