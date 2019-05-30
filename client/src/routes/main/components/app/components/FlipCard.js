@@ -61,6 +61,7 @@ const StyledFlipCard = styled.div`
     color: ${colors.black};
     background-color: ${colors.white};
     padding: 10px;
+    overflow: auto
     
     &.front {
       z-index: 2;
@@ -68,7 +69,7 @@ const StyledFlipCard = styled.div`
     }
     
     &.back {
-      transform: translateX(-50%) rotateY(180deg); 
+      transform: translateX(-50%) rotateY(180deg);
     }
   }
 `;

@@ -15,6 +15,14 @@ const StyledList = styled(({ className, children, ...rest }) => (
 ))`
   width: 100%;
 
+  .list-item-text {
+    > p, > span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
   &:focus {
     outline: none;
   }
@@ -31,6 +39,7 @@ const Card = ({ deleteCard, data : { card_id, user_id, front, back, creation_dat
         <ListItemText
           primary={front}
           secondary={back}
+          className="list-item-text"
         />
         <IconButton
           aria-label="Delete"
