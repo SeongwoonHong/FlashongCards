@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
 import { graphql, compose } from 'react-apollo';
 import { DELETE_CARD_MUTATION, UPDATE_CARD, GET_ALL_CARDS_QUERY } from 'queries';
@@ -17,8 +17,21 @@ const FlipCardList = ({
   toggleUpdateCard,
   setEditData,
   setModalMode,
+  initialIndex,
+  setInitialIndex,
 }) => {
-  const [index, setIndex] = useState(1);
+  const [index, setIndex] = useState(initialIndex || 1);
+  let slider;
+
+  useEffect(() => {
+    if (initialIndex !== 1) {
+      slider.slickGoTo(initialIndex - 1, true);
+    }
+
+    return function initializeInitialIndex() {
+      setInitialIndex(1);
+    }
+  }, [initialIndex, slider, setInitialIndex]);
 
   if (loading) {
     return null;
@@ -32,7 +45,11 @@ const FlipCardList = ({
   return (
     <div>
       <StyledIndex>{`${index} / ${cards.length}`}</StyledIndex>
-      <Slider {...sliderSettings}>
+      <Slider
+        {...sliderSettings}
+        ref={el => slider = el}
+        arrows={false}
+      >
         {
           cards.map((card) => {
             return (

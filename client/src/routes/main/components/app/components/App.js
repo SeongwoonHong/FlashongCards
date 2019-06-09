@@ -23,11 +23,12 @@ const modalStyles = {
 };
 
 const App = ({ cards, loading, history, currentUser }) => {
-  const [mode, setMode] = useState('list');
+  const [mode, setMode] = useState('list'); // either list or study
   const [tabFilter, setTabFilter] = useState('All');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState('ADD_CARD');
   const [editData, setEditData] = useState({});
+  const [initialIndex, setInitialIndex] = useState(1);
 
   if (loading) {
     return <Loader />;
@@ -43,6 +44,11 @@ const App = ({ cards, loading, history, currentUser }) => {
 
   function closeModal() {
     setIsModalOpen(false);
+  }
+
+  function openIndividualCard(index) {
+    setInitialIndex(index)
+    setMode('study')
   }
 
   function renderBody() {
@@ -71,6 +77,7 @@ const App = ({ cards, loading, history, currentUser }) => {
           </StyledTabContainer>
           <CardList
             cards={cards}
+            setInitialIndex={openIndividualCard}
           />
         </Fragment>
       );
@@ -83,6 +90,8 @@ const App = ({ cards, loading, history, currentUser }) => {
         toggleUpdateCard={openModal}
         setEditData={setEditData}
         setModalMode={setModalMode}
+        initialIndex={initialIndex}
+        setInitialIndex={setInitialIndex}
       />
     );
   }

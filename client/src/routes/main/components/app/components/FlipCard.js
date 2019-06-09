@@ -56,7 +56,7 @@ const StyledFlipCard = styled.div`
     left: 50%;
     transform: translateX(-50%);
     height: 500px;
-    width: 350px;
+    width: 300px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     color: ${colors.black};
     background-color: ${colors.white};

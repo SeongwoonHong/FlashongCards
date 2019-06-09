@@ -13,7 +13,7 @@ import Routes from './routes';
 import GlobalStyle from './styles';
 
 const httpLink = createHttpLink({
-  uri: 'http://seong9551.hopto.org:42132/graphql'
+  uri: 'http://localhost:5000/graphql'
 });
 
 const authLink = setContext((_, { headers }) => {

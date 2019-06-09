@@ -32,7 +32,7 @@ const StyledList = styled(({ className, children, ...rest }) => (
   }
 `
 
-const Card = ({ deleteCard, data : { card_id, user_id, front, back, creation_date, modification_date, is_studied, is_favorite } }) => {
+const Card = ({ setInitialIndex, index, deleteCard, data : { card_id, user_id, front, back, creation_date, modification_date, is_studied, is_favorite } }) => {
   return (
     <StyledList>
       <ListItem>
@@ -40,6 +40,7 @@ const Card = ({ deleteCard, data : { card_id, user_id, front, back, creation_dat
           primary={front}
           secondary={back}
           className="list-item-text"
+          onClick={() => setInitialIndex(index + 1)}
         />
         <IconButton
           aria-label="Delete"

@@ -10,7 +10,7 @@ const StyledCardList = styled.div`
   width: 80%;
 `;
 
-const CardList = ({ cards, removeCard, loading }) => {
+const CardList = ({ cards, removeCard, loading, setInitialIndex }) => {
   if (loading) {
     return null;
   }
@@ -18,12 +18,14 @@ const CardList = ({ cards, removeCard, loading }) => {
   return (
     <StyledCardList>
       {
-        cards.map((card) => {
+        cards.map((card, index) => {
           return (
             <Card
               data={card}
               key={card.card_id}
+              index={index}
               removeCard={(id) => removeCard(card.card_id)}
+              setInitialIndex={setInitialIndex}
             />
           );
         })
